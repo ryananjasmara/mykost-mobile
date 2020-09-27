@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "260469239576",
+    "firebase_url": "https://mykost-mobile.firebaseio.com",
+    "project_id": "mykost-mobile",
+    "storage_bucket": "mykost-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260469239576:android:6185b91d7b40ff98bff86d",
+        "android_client_info": {
+          "package_name": "com.mykost"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260469239576-2emr8gn2b1klr21vm1eublhbh1hrmv1j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mykost",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "260469239576-ceuufqsbo3pi9u4jkkcplf489atbuoa5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTOGOzwP_uiFVj2fMb4LwupD0y-o7QC8M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260469239576-ceuufqsbo3pi9u4jkkcplf489atbuoa5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
