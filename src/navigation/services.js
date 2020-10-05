@@ -5,7 +5,7 @@ import {CommonActions} from '@react-navigation/native';
 export const navigationRef = React.createRef();
 
 function navigate(screenName, params) {
-  navigationRef.current?.dispatch(screenName, params);
+  navigationRef.current?.navigate(screenName, params);
 }
 
 function push(screenName, params) {
