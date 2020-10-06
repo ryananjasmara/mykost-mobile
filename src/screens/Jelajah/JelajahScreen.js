@@ -13,7 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {WHITE, GRAY, LIGHT_GRAY, PRIMARY} from '../../config/colors';
 import {DEFAULT_BANNER} from '../../assets/images';
 import {rupiahFormat} from '../../helpers/index';
-import {useIsFocused} from '@react-navigation/native';
+// import {useIsFocused} from '@react-navigation/native';
 
 const room = [
   {
@@ -114,11 +114,11 @@ const JelajahScreen = () => {
     } else {
       setRoomData(sorted.reverse());
     }
-    console.log(sorted);
     setRoomData(sorted);
   };
   /** End Of Functional Section */
   /** Start Of Render Section */
+  // Search
   const renderSearch = () => {
     return (
       <View style={styles.searchContainer}>
