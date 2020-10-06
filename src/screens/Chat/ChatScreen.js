@@ -13,6 +13,7 @@ import {WHITE, GRAY, PRIMARY, LIGHT_GRAY} from '../../config/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {DEFAULT_BANNER} from '../../assets/images';
 import {cutLongString} from '../../helpers/index';
+import NavigationService from '../../navigation/services';
 
 const allChat = [
   {
@@ -70,6 +71,10 @@ const ChatScreen = () => {
     } else {
       setChatData(unreadChat);
     }
+  };
+  // Navigate To Chat Detail
+  const navigateToChatDetail = (personName) => {
+    NavigationService.navigate('ChatDetailScreen', {name: personName});
   };
   /** End Of Lifecycle Section */
   /** Start Of Functional Section */
@@ -130,7 +135,10 @@ const ChatScreen = () => {
   const renderChatItem = (chat) => {
     return chat.map((item, index) => {
       return (
-        <View key={index} style={styles.chatItem}>
+        <TouchableOpacity
+          key={index}
+          style={styles.chatItem}
+          onPress={() => navigateToChatDetail(item.personName)}>
           <View style={styles.chatAvatarContainer}>
             <Image style={styles.chatAvatar} source={DEFAULT_BANNER} />
           </View>
@@ -138,7 +146,7 @@ const ChatScreen = () => {
             <Text style={styles.chatNameText}>{item.personName}</Text>
             <Text>{cutLongString(item.lastMessage)}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
       );
     });
   };
