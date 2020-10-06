@@ -10,6 +10,7 @@ import HomeScreen from '../screens/Home/HomeScreen';
 import JelajahScreen from '../screens/Jelajah/JelajahScreen';
 import ChatScreen from '../screens/Chat/ChatScreen';
 import LoginScreen from '../screens/Login/LoginScreen';
+import ChatDetailScreen from '../screens/Chat/ChatDetailScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -26,6 +27,13 @@ const StackNavigator = () => {
         name="HomeScreen"
         component={TabNavigator}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ChatDetailScreen"
+        component={ChatDetailScreen}
+        options={({route}) => ({
+          title: route.params.name,
+        })}
       />
     </Stack.Navigator>
   );
