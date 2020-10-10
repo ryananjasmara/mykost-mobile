@@ -11,6 +11,7 @@ import JelajahScreen from '../screens/Jelajah/JelajahScreen';
 import ChatScreen from '../screens/Chat/ChatScreen';
 import LoginScreen from '../screens/Login/LoginScreen';
 import ChatDetailScreen from '../screens/Chat/ChatDetailScreen';
+import LoginFormScreen from '../screens/Login/LoginFormScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -31,6 +32,13 @@ const StackNavigator = () => {
       <Stack.Screen
         name="ChatDetailScreen"
         component={ChatDetailScreen}
+        options={({route}) => ({
+          title: route.params.name,
+        })}
+      />
+      <Stack.Screen
+        name="LoginFormScreen"
+        component={LoginFormScreen}
         options={({route}) => ({
           title: route.params.name,
         })}
