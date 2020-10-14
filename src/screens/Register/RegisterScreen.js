@@ -1,8 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {WHITE} from '../../config/colors';
+import {View, Text, StyleSheet, TextInput} from 'react-native';
+import {GRAY, PRIMARY, WHITE} from '../../config/colors';
+import {capitalizeFirstLetter} from '../../helpers';
 
-const RegisterScreen = () => {
+const RegisterScreen = ({route}) => {
+  const [nama, setNama] = useState('');
+  const [noHP, setNoHP] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   /** Start Of Lifecycle Section */
   // Did Mount
   useEffect(() => {
@@ -14,7 +19,51 @@ const RegisterScreen = () => {
   /** Start Of Render Section */
   return (
     <View style={styles.mainContainer}>
-      <Text>Register Screen</Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.headerText}>{`Daftar ${capitalizeFirstLetter(
+          route.params.registerType,
+        )} Properti`}</Text>
+      </View>
+      <View style={styles.formContainer}>
+        <View style={styles.formSection}>
+          <Text style={styles.formLabel}>Nama</Text>
+          <TextInput
+            style={styles.formTextInput}
+            value={nama}
+            onChangeText={(text) => setNama(text)}
+          />
+        </View>
+        <View style={styles.formSection}>
+          <Text style={styles.formLabel}>Nomor Handphone</Text>
+          <TextInput
+            style={styles.formTextInput}
+            keyboardType="number-pad"
+            value={noHP}
+            onChangeText={(text) => setNoHP(text)}
+          />
+        </View>
+        <View style={styles.formSection}>
+          <Text style={styles.formLabel}>Email</Text>
+          <TextInput
+            style={styles.formTextInput}
+            keyboardType="email-address"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
+        </View>
+        <View style={styles.formSection}>
+          <Text style={styles.formLabel}>Password</Text>
+          <TextInput
+            style={styles.formTextInput}
+            secureTextEntry
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Text style={styles.buttonText}>Daftar</Text>
+        </View>
+      </View>
     </View>
   );
   /** End Of Render Section */
@@ -23,9 +72,52 @@ const RegisterScreen = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: WHITE,
+  },
+  headerContainer: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  headerText: {
+    fontSize: 30,
+  },
+  formContainer: {
+    marginTop: 32,
+    paddingHorizontal: 32,
+  },
+  formSection: {
+    marginBottom: 16,
+  },
+  formLabel: {
+    marginBottom: 8,
+  },
+  formTextInput: {
+    height: 40,
+    borderBottomColor: GRAY,
+    borderBottomWidth: 1,
+    padding: 8,
+  },
+  buttonContainer: {
+    marginTop: 16,
+    backgroundColor: PRIMARY,
+    paddingVertical: 16,
+    alignItems: 'center',
+    borderRadius: 4,
+  },
+  buttonText: {
+    color: WHITE,
+  },
+  footerContainer: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  footerText: {
+    fontSize: 12,
+  },
+  registerText: {
+    marginTop: 8,
+    fontSize: 14,
+    color: PRIMARY,
   },
 });
 
