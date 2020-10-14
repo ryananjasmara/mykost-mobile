@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import {GRAY, PRIMARY, WHITE} from '../../config/colors';
 import {capitalizeFirstLetter} from '../../helpers';
+import NavigationService from '../../navigation/services';
 
 const LoginFormScreen = ({route}) => {
   const [noHP, setNoHP] = useState('');
@@ -15,6 +16,10 @@ const LoginFormScreen = ({route}) => {
   }, []);
   /** End Of Lifecycle Section */
   /** Start Of Functional Section */
+  // Navigate To Login Form
+  const navigateToRegister = (registerType) => {
+    NavigationService.navigate('RegisterScreen', {registerType});
+  };
   /** End Of Functional Section */
   /** Start Of Render Section */
   return (
@@ -57,7 +62,8 @@ const LoginFormScreen = ({route}) => {
         </View>
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Belum punya akun MYKost?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigateToRegister(route.params.loginType)}>
             <Text style={styles.registerText}>Daftar disini</Text>
           </TouchableOpacity>
         </View>
