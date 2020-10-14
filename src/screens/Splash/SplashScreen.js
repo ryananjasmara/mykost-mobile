@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import NavigationService from '../../navigation/services';
 import {WHITE} from '../../config/colors';
+import {MYKOST_LOGO} from '../../assets/images';
 
 const SplashScreen = () => {
   const [isInitializeFinish, setInitializeFinish] = useState(false);
@@ -25,7 +26,8 @@ const SplashScreen = () => {
   /** Start Of Render Section */
   return (
     <View style={styles.mainContainer}>
-      <Text>Splash Screen</Text>
+      <Image source={MYKOST_LOGO} style={styles.logo} />
+      <Text style={styles.text}>MYKOST</Text>
     </View>
   );
   /** End Of Render Section */
@@ -37,6 +39,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: WHITE,
+  },
+  logo: {
+    height: 200,
+    width: undefined,
+    aspectRatio: 1 / 1,
+    resizeMode: 'contain',
+    marginBottom: 10,
+  },
+  text: {
+    fontSize: 40,
+    fontWeight: 'bold',
   },
 });
 
