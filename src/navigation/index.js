@@ -39,9 +39,7 @@ const StackNavigator = () => {
       <Stack.Screen
         name="LoginFormScreen"
         component={LoginFormScreen}
-        options={({route}) => ({
-          title: route.params.name,
-        })}
+        options={{headerTitle: ''}}
       />
     </Stack.Navigator>
   );
