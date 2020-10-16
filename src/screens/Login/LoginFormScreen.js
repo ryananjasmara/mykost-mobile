@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  ScrollView,
 } from 'react-native';
 import {GRAY, PRIMARY, WHITE} from '../../config/colors';
 import {capitalizeFirstLetter} from '../../helpers';
@@ -123,7 +124,7 @@ const LoginFormScreen = ({route}) => {
     );
   };
   return (
-    <View style={styles.mainContainer}>
+    <ScrollView style={styles.mainContainer}>
       {renderHeader()}
       <View style={styles.formContainer}>
         {renderFormNomorHandphone()}
@@ -132,7 +133,7 @@ const LoginFormScreen = ({route}) => {
         {renderLoginButton()}
         {renderFooter()}
       </View>
-    </View>
+    </ScrollView>
   );
   /** End Of Render Section */
 };
