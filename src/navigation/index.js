@@ -12,6 +12,7 @@ import ChatScreen from '../screens/Chat/ChatScreen';
 import LoginScreen from '../screens/Login/LoginScreen';
 import ChatDetailScreen from '../screens/Chat/ChatDetailScreen';
 import LoginFormScreen from '../screens/Login/LoginFormScreen';
+import RegisterScreen from '../screens/Register/RegisterScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,6 +41,11 @@ const StackNavigator = () => {
         name="LoginFormScreen"
         component={LoginFormScreen}
         options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
+        options={{headerTitle: 'Register'}}
       />
     </Stack.Navigator>
   );
