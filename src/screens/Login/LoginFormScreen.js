@@ -1,14 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+} from 'react-native';
 import {GRAY, PRIMARY, WHITE} from '../../config/colors';
 import {capitalizeFirstLetter} from '../../helpers';
 import NavigationService from '../../navigation/services';
+import Methods from '../../services/api/methods';
+import ButtonDefault from '../../components/Button/ButtonDefault';
 
 const LoginFormScreen = ({route}) => {
   const [noHP, setNoHP] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setLoading] = useState(false);
   /** Start Of Lifecycle Section */
   // Did Mount
   useEffect(() => {
@@ -20,53 +29,108 @@ const LoginFormScreen = ({route}) => {
   const navigateToRegister = (registerType) => {
     NavigationService.navigate('RegisterScreen', {registerType});
   };
+  // ValidateLogin
+  const validateLogin = async () => {
+    if (noHP.length > 0 && email.length > 0 && password.length > 0) {
+      setLoading(true);
+      const params = {
+        loginType: route.params.loginType,
+        nomorHandphone: noHP,
+        email: email,
+        password: password,
+      };
+      const login = await Methods.login(params);
+      console.log(login);
+      setLoading(false);
+    } else {
+      Alert.alert('isi form terlebih dahulu');
+    }
+  };
   /** End Of Functional Section */
   /** Start Of Render Section */
-  return (
-    <View style={styles.mainContainer}>
+  // Header
+  const renderHeader = () => {
+    return (
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>{`Login ${capitalizeFirstLetter(
           route.params.loginType,
         )} Properti`}</Text>
       </View>
+    );
+  };
+  // Form Nomor Handphone
+  const renderFormNomorHandphone = () => {
+    return (
+      <View style={styles.formSection}>
+        <Text style={styles.formLabel}>Nomor Handphone</Text>
+        <TextInput
+          style={styles.formTextInput}
+          keyboardType="number-pad"
+          value={noHP}
+          onChangeText={(text) => setNoHP(text)}
+        />
+      </View>
+    );
+  };
+  // Form Email
+  const renderFormEmail = () => {
+    return (
+      <View style={styles.formSection}>
+        <Text style={styles.formLabel}>Email</Text>
+        <TextInput
+          style={styles.formTextInput}
+          keyboardType="email-address"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
+      </View>
+    );
+  };
+  const renderFormPassword = () => {
+    return (
+      <View style={styles.formSection}>
+        <Text style={styles.formLabel}>Password</Text>
+        <TextInput
+          style={styles.formTextInput}
+          secureTextEntry
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+        />
+      </View>
+    );
+  };
+  // Login Button
+  const renderLoginButton = () => {
+    return (
+      <ButtonDefault
+        title={'Login'}
+        loading={isLoading}
+        disabled={isLoading}
+        onPress={() => validateLogin()}
+      />
+    );
+  };
+  // Footer
+  const renderFooter = () => {
+    return (
+      <View style={styles.footerContainer}>
+        <Text style={styles.footerText}>Belum punya akun MYKost?</Text>
+        <TouchableOpacity
+          onPress={() => navigateToRegister(route.params.loginType)}>
+          <Text style={styles.registerText}>Daftar Disini</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+  return (
+    <View style={styles.mainContainer}>
+      {renderHeader()}
       <View style={styles.formContainer}>
-        <View style={styles.formSection}>
-          <Text style={styles.formLabel}>Nomor Handphone</Text>
-          <TextInput
-            style={styles.formTextInput}
-            keyboardType="number-pad"
-            value={noHP}
-            onChangeText={(text) => setNoHP(text)}
-          />
-        </View>
-        <View style={styles.formSection}>
-          <Text style={styles.formLabel}>Email</Text>
-          <TextInput
-            style={styles.formTextInput}
-            keyboardType="email-address"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-          />
-        </View>
-        <View style={styles.formSection}>
-          <Text style={styles.formLabel}>Password</Text>
-          <TextInput
-            style={styles.formTextInput}
-            secureTextEntry
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>Login</Text>
-        </View>
-        <View style={styles.footerContainer}>
-          <Text style={styles.footerText}>Belum punya akun MYKost?</Text>
-          <TouchableOpacity
-            onPress={() => navigateToRegister(route.params.loginType)}>
-            <Text style={styles.registerText}>Daftar disini</Text>
-          </TouchableOpacity>
-        </View>
+        {renderFormNomorHandphone()}
+        {renderFormEmail()}
+        {renderFormPassword()}
+        {renderLoginButton()}
+        {renderFooter()}
       </View>
     </View>
   );
@@ -101,16 +165,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 8,
   },
-  buttonContainer: {
-    marginTop: 16,
-    backgroundColor: PRIMARY,
-    paddingVertical: 16,
-    alignItems: 'center',
-    borderRadius: 4,
-  },
-  buttonText: {
-    color: WHITE,
-  },
   footerContainer: {
     marginTop: 16,
     alignItems: 'center',
@@ -122,6 +176,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 14,
     color: PRIMARY,
+    textDecorationLine: 'underline',
   },
 });
 
