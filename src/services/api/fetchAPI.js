@@ -20,6 +20,7 @@ export default async function fetchAPI({path, method, params}) {
       if (response.status === 200 || response.status === 201) {
         return response.json().then((value) => {
           return {
+            status: response.status,
             data: value.data,
             message: value.message,
           };
@@ -27,6 +28,7 @@ export default async function fetchAPI({path, method, params}) {
       } else {
         return response.json().then((value) => {
           return {
+            status: response.status,
             message: value.message,
           };
         });
