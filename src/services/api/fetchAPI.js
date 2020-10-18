@@ -1,5 +1,5 @@
 export default async function fetchAPI({path, method, params}) {
-  const host = 'https://mykost-admin.000webhostapp.com/api';
+  const host = 'https://mykost-admin.000webhostapp.com/api/';
 
   const headers = {
     Accept: 'application/json',
