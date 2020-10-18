@@ -11,6 +11,7 @@ import {GRAY, PRIMARY, WHITE} from '../../config/colors';
 import {capitalizeFirstLetter} from '../../helpers';
 import ButtonDefault from '../../components/Button/ButtonDefault';
 import Methods from '../../services/api/methods';
+import NavigationService from '../../navigation/services';
 
 const RegisterScreen = ({route}) => {
   const [nama, setNama] = useState('');
@@ -27,25 +28,32 @@ const RegisterScreen = ({route}) => {
   /** Start Of Functional Section */
   // Fetch Register
   const fetchRegister = async () => {
-    if (
-      nama.length > 0 &&
-      noHP.length > 0 &&
-      email.length > 0 &&
-      password.length > 0
-    ) {
-      setLoading(true);
-      const params = {
-        registerType: route.params.registerType,
-        nama: nama,
-        nomorHandphone: noHP,
-        email: email,
-        password: password,
-      };
-      const register = await Methods.register(params);
-      setLoading(false);
-      Alert.alert(register.message);
-    } else {
-      Alert.alert('isi form terlebih dahulu');
+    try {
+      if (
+        nama.length > 0 &&
+        noHP.length > 0 &&
+        email.length > 0 &&
+        password.length > 0
+      ) {
+        setLoading(true);
+        const params = {
+          registerType: route.params.registerType,
+          nama: nama,
+          nomorHandphone: noHP,
+          email: email,
+          password: password,
+        };
+        const register = await Methods.register(params);
+        setLoading(false);
+        Alert.alert(register.message);
+        if (register.status === 200) {
+          NavigationService.navigate('LoginFormScreen');
+        }
+      } else {
+        Alert.alert('isi form terlebih dahulu');
+      }
+    } catch (error) {
+      Alert.alert(error);
     }
   };
   /** End Of Functional Section */

@@ -9,10 +9,10 @@ import SplashScreen from '../screens/Splash/SplashScreen';
 import HomeScreen from '../screens/Home/HomeScreen';
 import JelajahScreen from '../screens/Jelajah/JelajahScreen';
 import ChatScreen from '../screens/Chat/ChatScreen';
-import LoginScreen from '../screens/Login/LoginScreen';
 import ChatDetailScreen from '../screens/Chat/ChatDetailScreen';
 import LoginFormScreen from '../screens/Login/LoginFormScreen';
 import RegisterScreen from '../screens/Register/RegisterScreen';
+import ProfileScreen from '../screens/Profile/ProfileScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -63,7 +63,7 @@ const TabNavigator = () => {
             iconName = focused ? 'grid' : 'grid-outline';
           } else if (route.name === 'Chat') {
             iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
-          } else if (route.name === 'Login') {
+          } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
           }
 
@@ -83,7 +83,7 @@ const TabNavigator = () => {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Jelajah" component={JelajahScreen} />
       <Tab.Screen name="Chat" component={ChatScreen} />
-      <Tab.Screen name="Login" component={LoginScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 };

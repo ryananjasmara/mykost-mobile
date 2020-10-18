@@ -8,10 +8,10 @@ import {
   Alert,
   ScrollView,
 } from 'react-native';
+import {useStoreActions, useStoreState} from 'easy-peasy';
 import {GRAY, PRIMARY, WHITE} from '../../config/colors';
 import {capitalizeFirstLetter} from '../../helpers';
 import NavigationService from '../../navigation/services';
-import Methods from '../../services/api/methods';
 import ButtonDefault from '../../components/Button/ButtonDefault';
 
 const LoginFormScreen = ({route}) => {
@@ -19,11 +19,22 @@ const LoginFormScreen = ({route}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setLoading] = useState(false);
+  const user = useStoreState((state) => state.user);
+  const fetchUser = useStoreActions((actions) => actions.fetchUser);
   /** Start Of Lifecycle Section */
   // Did Mount
   useEffect(() => {
     console.log('LoginFormScreen.js did mount');
   }, []);
+  // Did Update
+  useEffect(() => {
+    if (user !== null) {
+      Alert.alert(user.message);
+      if (user.status === 200) {
+        NavigationService.navigate('HomeScreen');
+      }
+    }
+  }, [user]);
   /** End Of Lifecycle Section */
   /** Start Of Functional Section */
   // Navigate To Login Form
@@ -32,19 +43,22 @@ const LoginFormScreen = ({route}) => {
   };
   // ValidateLogin
   const validateLogin = async () => {
-    if (noHP.length > 0 && email.length > 0 && password.length > 0) {
-      setLoading(true);
-      const params = {
-        loginType: route.params.loginType,
-        nomorHandphone: noHP,
-        email: email,
-        password: password,
-      };
-      const login = await Methods.login(params);
-      console.log(login);
-      setLoading(false);
-    } else {
-      Alert.alert('isi form terlebih dahulu');
+    try {
+      if (noHP.length > 0 && email.length > 0 && password.length > 0) {
+        setLoading(true);
+        const params = {
+          loginType: route.params.loginType,
+          nomorHandphone: noHP,
+          email: email,
+          password: password,
+        };
+        await fetchUser(params);
+        setLoading(false);
+      } else {
+        Alert.alert('isi form terlebih dahulu');
+      }
+    } catch (error) {
+      Alert.alert(error);
     }
   };
   /** End Of Functional Section */
