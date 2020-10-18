@@ -1,13 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Alert,
+  ScrollView,
+} from 'react-native';
 import {GRAY, PRIMARY, WHITE} from '../../config/colors';
 import {capitalizeFirstLetter} from '../../helpers';
+import ButtonDefault from '../../components/Button/ButtonDefault';
+import Methods from '../../services/api/methods';
 
 const RegisterScreen = ({route}) => {
   const [nama, setNama] = useState('');
   const [noHP, setNoHP] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setLoading] = useState(false);
   /** Start Of Lifecycle Section */
   // Did Mount
   useEffect(() => {
@@ -15,56 +25,120 @@ const RegisterScreen = ({route}) => {
   }, []);
   /** End Of Lifecycle Section */
   /** Start Of Functional Section */
+  // Fetch Register
+  const fetchRegister = async () => {
+    if (
+      nama.length > 0 &&
+      noHP.length > 0 &&
+      email.length > 0 &&
+      password.length > 0
+    ) {
+      setLoading(true);
+      const params = {
+        registerType: route.params.registerType,
+        nama: nama,
+        nomorHandphone: noHP,
+        email: email,
+        password: password,
+      };
+      console.log(params);
+      const register = await Methods.register(params);
+      console.log(register);
+      setLoading(false);
+      Alert.alert(register.message);
+    } else {
+      Alert.alert('isi form terlebih dahulu');
+    }
+  };
   /** End Of Functional Section */
   /** Start Of Render Section */
-  return (
-    <View style={styles.mainContainer}>
+  // Header
+  const renderHeader = () => {
+    return (
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>{`Daftar ${capitalizeFirstLetter(
           route.params.registerType,
         )} Properti`}</Text>
       </View>
-      <View style={styles.formContainer}>
-        <View style={styles.formSection}>
-          <Text style={styles.formLabel}>Nama</Text>
-          <TextInput
-            style={styles.formTextInput}
-            value={nama}
-            onChangeText={(text) => setNama(text)}
-          />
-        </View>
-        <View style={styles.formSection}>
-          <Text style={styles.formLabel}>Nomor Handphone</Text>
-          <TextInput
-            style={styles.formTextInput}
-            keyboardType="number-pad"
-            value={noHP}
-            onChangeText={(text) => setNoHP(text)}
-          />
-        </View>
-        <View style={styles.formSection}>
-          <Text style={styles.formLabel}>Email</Text>
-          <TextInput
-            style={styles.formTextInput}
-            keyboardType="email-address"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-          />
-        </View>
-        <View style={styles.formSection}>
-          <Text style={styles.formLabel}>Password</Text>
-          <TextInput
-            style={styles.formTextInput}
-            secureTextEntry
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>Daftar</Text>
-        </View>
+    );
+  };
+  // Form Nama
+  const renderFormNama = () => {
+    return (
+      <View style={styles.formSection}>
+        <Text style={styles.formLabel}>Nama</Text>
+        <TextInput
+          style={styles.formTextInput}
+          value={nama}
+          onChangeText={(text) => setNama(text)}
+        />
       </View>
-    </View>
+    );
+  };
+  // Form Nomor Handphone
+  const renderFormNomorHandphone = () => {
+    return (
+      <View style={styles.formSection}>
+        <Text style={styles.formLabel}>Nomor Handphone</Text>
+        <TextInput
+          style={styles.formTextInput}
+          keyboardType="number-pad"
+          value={noHP}
+          onChangeText={(text) => setNoHP(text)}
+        />
+      </View>
+    );
+  };
+  // Form Email
+  const renderFormEmail = () => {
+    return (
+      <View style={styles.formSection}>
+        <Text style={styles.formLabel}>Email</Text>
+        <TextInput
+          style={styles.formTextInput}
+          keyboardType="email-address"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
+      </View>
+    );
+  };
+  // Form Password
+  const renderFormPassword = () => {
+    return (
+      <View style={styles.formSection}>
+        <Text style={styles.formLabel}>Password</Text>
+        <TextInput
+          style={styles.formTextInput}
+          secureTextEntry
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+        />
+      </View>
+    );
+  };
+  // Register Button
+  const renderRegisterButton = () => {
+    return (
+      <ButtonDefault
+        title={'Daftar'}
+        loading={isLoading}
+        disabled={isLoading}
+        onPress={() => fetchRegister()}
+      />
+    );
+  };
+  return (
+    <ScrollView style={styles.mainContainer}>
+      {renderHeader()}
+      <View style={styles.formContainer}>
+        {renderFormNama()}
+        {renderFormNomorHandphone()}
+        {renderFormEmail()}
+        {renderFormPassword()}
+        {renderRegisterButton()}
+      </View>
+    </ScrollView>
   );
   /** End Of Render Section */
 };
@@ -96,16 +170,6 @@ const styles = StyleSheet.create({
     borderBottomColor: GRAY,
     borderBottomWidth: 1,
     padding: 8,
-  },
-  buttonContainer: {
-    marginTop: 16,
-    backgroundColor: PRIMARY,
-    paddingVertical: 16,
-    alignItems: 'center',
-    borderRadius: 4,
-  },
-  buttonText: {
-    color: WHITE,
   },
   footerContainer: {
     marginTop: 16,
