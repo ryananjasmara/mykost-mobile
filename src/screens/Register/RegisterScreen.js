@@ -41,9 +41,7 @@ const RegisterScreen = ({route}) => {
         email: email,
         password: password,
       };
-      console.log(params);
       const register = await Methods.register(params);
-      console.log(register);
       setLoading(false);
       Alert.alert(register.message);
     } else {
