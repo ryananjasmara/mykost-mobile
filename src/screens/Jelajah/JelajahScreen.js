@@ -84,11 +84,20 @@ const JelajahScreen = () => {
     setRoomData(room);
   }, []);
   // Did Update
-  // useEffect(() => {
-  //   if (isFocused) {
-  //     searchRef.focus();
-  //   }
-  // }, [isFocused]);
+  useEffect(() => {
+    if (initialRoomData.length > 0) {
+      if (searchKey === '') {
+        setRoomData(initialRoomData);
+      } else {
+        const newRoomData = initialRoomData.filter((item) => {
+          const roomName = item.roomName.toLowerCase();
+          const keyword = searchKey.toLowerCase();
+          return roomName.includes(keyword);
+        });
+        setRoomData(newRoomData);
+      }
+    }
+  }, [searchKey]);
   /** End Of Lifecycle Section */
   /** Start Of Functional Section */
   // filter
