@@ -45,7 +45,7 @@ const room = [
     roomType: 'kosan',
   },
   {
-    roomName: 'Kontakan Makmur',
+    roomName: 'Kontrakan Makmur',
     roomAddress: 'Jl. Khatib Sutan No. 75',
     roomPrice: 250000,
     roomImage: DEFAULT_BANNER,
@@ -208,7 +208,7 @@ const JelajahScreen = () => {
         <TouchableOpacity
           style={styles.filterItem}
           onPress={() => filterRoom('kontrakan')}>
-          <Text>Kontakan</Text>
+          <Text>Kontrakan</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.filterItem}
