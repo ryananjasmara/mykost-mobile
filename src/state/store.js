@@ -15,7 +15,7 @@ const storage = {
 };
 
 const userModel = {
-  user: storage.getItem('user'),
+  user: null,
   // api call / effect
   fetchUser: thunk(async (actions, payload) => {
     const response = await Methods.login(payload);
@@ -24,18 +24,19 @@ const userModel = {
   // actions
   setUser: action((state, payload) => {
     state.user = payload;
-    storage.setItem('user', payload);
   }),
   clearUser: action((state, payload) => {
     state.user = null;
-    storage.setItem('user', null);
   }),
 };
 
 const store = createStore(
-  persist({
-    ...userModel,
-  }),
+  persist(
+    {
+      ...userModel,
+    },
+    {storage},
+  ),
 );
 
 export default store;
