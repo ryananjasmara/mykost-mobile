@@ -13,6 +13,7 @@ import {WHITE, GRAY, PRIMARY, LIGHT_GRAY} from '../../config/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {DEFAULT_BANNER} from '../../assets/images';
 import NavigationService from '../../navigation/services';
+import {useStoreState} from 'easy-peasy';
 
 const promoBanner = [
   {
@@ -67,6 +68,7 @@ const recommendation = [
 ];
 
 const HomeScreen = () => {
+  const user = useStoreState((state) => state.user);
   /** Start Of Lifecycle Section */
   // Did Mount
   useEffect(() => {
@@ -75,8 +77,8 @@ const HomeScreen = () => {
   /** End Of Lifecycle Section */
   /** Start Of Functional Section */
   // Navigate To Jelajah
-  const navigateToJelajah = () => {
-    NavigationService.navigate('Jelajah');
+  const navigateToJelajah = (key) => {
+    NavigationService.navigate('Jelajah', {key});
   };
   /** End Of Functional Section */
   /** Start Of Render Section */
@@ -144,12 +146,15 @@ const HomeScreen = () => {
   const renderMenuItem = (menu) => {
     return menu.map((item, index) => {
       return (
-        <View key={index} style={styles.menuItemContainer}>
+        <TouchableOpacity
+          key={index}
+          style={styles.menuItemContainer}
+          onPress={() => navigateToJelajah(item.name)}>
           <View style={styles.menuIconContainer}>
             <Ionicons name={item.icon} size={30} color={GRAY} />
           </View>
           <Text>{item.name}</Text>
-        </View>
+        </TouchableOpacity>
       );
     });
   };
@@ -238,6 +243,7 @@ const styles = StyleSheet.create({
     width: undefined,
     aspectRatio: 2 / 1,
     resizeMode: 'cover',
+    borderRadius: 8,
   },
   // menu
   menuContainer: {
@@ -260,7 +266,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: LIGHT_GRAY,
+    borderColor: PRIMARY,
     backgroundColor: LIGHT_GRAY,
     borderRadius: 8,
     marginBottom: 4,
@@ -283,6 +289,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1 / 1,
     resizeMode: 'cover',
     marginBottom: 12,
+    borderRadius: 8,
   },
 });
 
