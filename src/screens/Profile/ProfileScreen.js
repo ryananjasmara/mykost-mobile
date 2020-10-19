@@ -2,10 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {WHITE} from '../../config/colors';
 import LoginScreen from '../Login/LoginScreen';
-import {useStoreState} from 'easy-peasy';
+import {useStoreState, useStoreActions} from 'easy-peasy';
+import ButtonDefault from '../../components/Button/ButtonDefault';
 
 const ProfileScreen = () => {
   const user = useStoreState((state) => state.user);
+  const clearUser = useStoreActions((actions) => actions.clearUser);
+  console.log(user);
   /** Start Of Lifecycle Section */
   // Did Mount
   useEffect(() => {
@@ -24,6 +27,7 @@ const ProfileScreen = () => {
     return (
       <View style={styles.mainContainer}>
         <Text>Hello World</Text>
+        <ButtonDefault title={'Logout'} onPress={() => clearUser()} />
       </View>
     );
   };
@@ -39,8 +43,6 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: WHITE,
   },
 });
