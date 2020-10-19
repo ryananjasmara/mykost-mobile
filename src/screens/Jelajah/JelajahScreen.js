@@ -69,7 +69,7 @@ const room = [
 
 // let searchRef;
 
-const JelajahScreen = () => {
+const JelajahScreen = ({route}) => {
   // const isFocused = useIsFocused();
   const [searchKey, setSearchKey] = useState('');
   const [isFilterRendered, setFilterRendered] = useState(false);
@@ -83,7 +83,13 @@ const JelajahScreen = () => {
     setInitialRoomData(room);
     setRoomData(room);
   }, []);
-  // Did Update
+  // Did Update (Route Params)
+  useEffect(() => {
+    if (route.params) {
+      filterRoom(route.params.key.toLowerCase());
+    }
+  }, [route.params]);
+  // Did Update (Searchkey)
   useEffect(() => {
     if (initialRoomData.length > 0) {
       if (searchKey === '') {
