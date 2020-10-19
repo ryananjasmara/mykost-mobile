@@ -54,6 +54,8 @@ const StackNavigator = () => {
 const TabNavigator = () => {
   return (
     <Tab.Navigator
+      initialRouteName="Home"
+      backBehavior="initialRoute"
       screenOptions={({route}) => ({
         tabBarIcon: ({focused}) => {
           let iconName;
