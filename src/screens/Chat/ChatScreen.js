@@ -96,7 +96,7 @@ const ChatScreen = () => {
             style={styles.searchInput}
             onChangeText={(text) => setSearchKey(text)}
             value={searchKey}
-            placeholder="Lagi Cari Apa?"
+            placeholder="Mau Chat Siapa?"
           />
         </View>
       </View>
