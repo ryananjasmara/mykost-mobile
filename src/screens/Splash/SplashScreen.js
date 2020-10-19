@@ -3,9 +3,12 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import NavigationService from '../../navigation/services';
 import {WHITE} from '../../config/colors';
 import {MYKOST_LOGO} from '../../assets/images';
+import {useStoreRehydrated} from 'easy-peasy';
 
 const SplashScreen = () => {
+  const isRehydrated = useStoreRehydrated();
   const [isInitializeFinish, setInitializeFinish] = useState(false);
+  console.log(isRehydrated);
   /** Start Of Lifecycle Section */
   // Did Mount
   useEffect(() => {
@@ -16,7 +19,7 @@ const SplashScreen = () => {
   }, []);
   // Did Update
   useEffect(() => {
-    if (isInitializeFinish) {
+    if (isInitializeFinish && isRehydrated) {
       NavigationService.reset('HomeScreen');
     }
   });
