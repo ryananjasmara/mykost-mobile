@@ -8,7 +8,6 @@ import {useStoreRehydrated} from 'easy-peasy';
 const SplashScreen = () => {
   const isRehydrated = useStoreRehydrated();
   const [isInitializeFinish, setInitializeFinish] = useState(false);
-  console.log(isRehydrated);
   /** Start Of Lifecycle Section */
   // Did Mount
   useEffect(() => {
@@ -53,6 +52,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 40,
     fontWeight: 'bold',
+    letterSpacing: 2,
   },
 });
 
