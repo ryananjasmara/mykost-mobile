@@ -81,12 +81,23 @@ const JelajahScreen = ({route}) => {
   useEffect(() => {
     console.log('JelajahScreen.js did mount');
     setInitialRoomData(room);
-    setRoomData(room);
+    if (route.params) {
+      const filtered = room.filter((item) => {
+        return item.roomType === route.params.key.toLowerCase();
+      });
+      console.log('filter', filtered);
+      setRoomData(filtered);
+    } else {
+      console.log('non filter', room);
+      setRoomData(room);
+    }
   }, []);
   // Did Update (Route Params)
   useEffect(() => {
-    if (route.params) {
-      filterRoom(route.params.key.toLowerCase());
+    if (initialRoomData.length > 0) {
+      if (route.params) {
+        filterRoom(route.params.key.toLowerCase());
+      }
     }
   }, [route.params]);
   // Did Update (Searchkey)
@@ -322,6 +333,7 @@ const styles = StyleSheet.create({
     width: undefined,
     aspectRatio: 1 / 1,
     resizeMode: 'cover',
+    borderRadius: 6,
   },
   roomDetails: {
     flex: 1,
