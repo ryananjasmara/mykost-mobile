@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -13,9 +13,6 @@ import {WHITE, GRAY, PRIMARY, LIGHT_GRAY} from '../../config/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {DEFAULT_BANNER} from '../../assets/images';
 import NavigationService from '../../navigation/services';
-import {useStoreState} from 'easy-peasy';
-import HomeDefault from './HomeDefault';
-import HomePemilik from './HomePemilik';
 
 const promoBanner = [
   {
@@ -69,13 +66,8 @@ const recommendation = [
   },
 ];
 
-const HomeScreen = () => {
-  const user = useStoreState((state) => state.user);
+const HomeDefault = () => {
   /** Start Of Lifecycle Section */
-  // Did Mount
-  useEffect(() => {
-    console.log('HomeScreen.js did mount');
-  }, []);
   /** End Of Lifecycle Section */
   /** Start Of Functional Section */
   // Navigate To Jelajah
@@ -185,27 +177,16 @@ const HomeScreen = () => {
       );
     });
   };
-
-  // Home Default
-  const renderHomeDefault = () => {
-    return <HomeDefault />;
-  };
-  // Home Pemilik
-  const renderHomePemilik = () => {
-    return <HomePemilik />;
-  };
-
-  console.log(user);
-
-  if (user === null) {
-    return renderHomeDefault();
-  } else {
-    if (user.data.tipe === 'pemilik') {
-      return renderHomePemilik();
-    } else if (user.data.tipe === 'pencari') {
-      return renderHomeDefault();
-    }
-  }
+  return (
+    <SafeAreaView style={styles.mainContainer}>
+      <ScrollView>
+        {renderSearch()}
+        {renderPromoBanner()}
+        {renderMenu()}
+        {renderRecommendation()}
+      </ScrollView>
+    </SafeAreaView>
+  );
   /** End Of Render Section */
 };
 
@@ -306,4 +287,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default HomeDefault;
