@@ -5,6 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {navigationRef} from './services';
 import {GRAY, PRIMARY} from '../config/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useStoreState} from 'easy-peasy';
 import SplashScreen from '../screens/Splash/SplashScreen';
 import HomeScreen from '../screens/Home/HomeScreen';
 import JelajahScreen from '../screens/Jelajah/JelajahScreen';
@@ -13,6 +14,9 @@ import ChatDetailScreen from '../screens/Chat/ChatDetailScreen';
 import LoginFormScreen from '../screens/Login/LoginFormScreen';
 import RegisterScreen from '../screens/Register/RegisterScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
+import IklanScreen from '../screens/Properti/IklanScreen';
+import TambahIklanScreen from '../screens/Properti/TambahIklanScreen';
+import TambahIklanScreen2 from '../screens/Properti/TambahIklanScreen2';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -47,11 +51,32 @@ const StackNavigator = () => {
         component={RegisterScreen}
         options={{headerTitle: 'Register'}}
       />
+      <Stack.Screen
+        name="TambahIklanScreen"
+        component={TambahIklanScreen}
+        options={{headerTitle: 'Tambah Iklan'}}
+      />
+      <Stack.Screen
+        name="TambahIklanScreen2"
+        component={TambahIklanScreen2}
+        options={{headerTitle: 'Informasi Detail Iklan'}}
+      />
     </Stack.Navigator>
   );
 };
 
 const TabNavigator = () => {
+  const user = useStoreState((state) => state.user);
+  const defaultAdditionalTab = (
+    <Tab.Screen name="Jelajah" component={JelajahScreen} />
+  );
+  const pemilikAdditionalTab = (
+    <Tab.Screen name="Iklan" component={IklanScreen} />
+  );
+  const additionalTab =
+    user && user.data.tipe === 'pemilik'
+      ? pemilikAdditionalTab
+      : defaultAdditionalTab;
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -67,6 +92,8 @@ const TabNavigator = () => {
             iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
+          } else if (route.name === 'Iklan') {
+            iconName = focused ? 'add-circle' : 'add-circle-outline';
           }
 
           return (
@@ -83,7 +110,7 @@ const TabNavigator = () => {
         inactiveTintColor: GRAY,
       }}>
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Jelajah" component={JelajahScreen} />
+      {additionalTab}
       <Tab.Screen name="Chat" component={ChatScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
