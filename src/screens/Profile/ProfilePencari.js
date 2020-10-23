@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
-import {WHITE, GRAY, PRIMARY} from '../../config/colors';
+import {WHITE, GRAY} from '../../config/colors';
 import {useStoreState, useStoreActions} from 'easy-peasy';
 import ButtonDefault from '../../components/Button/ButtonDefault';
 import {DEFAULT_BANNER} from '../../assets/images';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {rupiahFormat, thousandSeparator} from '../../helpers';
 import SpoilerComponent from './SpoilerComponent';
+import BalanceInfo from '../../components/BalanceInfo';
 
 const ProfilePencari = () => {
   const user = useStoreState((state) => state.user);
@@ -60,28 +60,7 @@ const ProfilePencari = () => {
   };
   // Balance Info
   const renderBalanceInfo = () => {
-    return (
-      <View style={styles.balanceInfoContainer}>
-        <View style={styles.balanceSectionContainer}>
-          <View style={styles.balanceSubContainer}>
-            <Text style={styles.balanceText}>Saldo</Text>
-            <Ionicons name="wallet-outline" size={21} color={PRIMARY} />
-          </View>
-          <Text style={styles.balanceValueText}>
-            {rupiahFormat(parseInt(user.data.saldo))}
-          </Text>
-        </View>
-        <View style={styles.balanceSectionContainer}>
-          <View style={styles.balanceSubContainer}>
-            <Text style={styles.balanceText}>Poin</Text>
-            <Ionicons name="card-outline" size={21} color={PRIMARY} />
-          </View>
-          <Text style={styles.balanceValueText}>
-            {thousandSeparator(parseInt(user.data.poin))}
-          </Text>
-        </View>
-      </View>
-    );
+    return <BalanceInfo />;
   };
   // Transaksi
   const renderTransaksi = () => {
@@ -207,36 +186,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginBottom: 16,
     minHeight: 100,
-  },
-  // balance info
-  balanceInfoContainer: {
-    marginHorizontal: 16,
-    borderWidth: 1,
-    borderColor: GRAY,
-    borderRadius: 6,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 16,
-  },
-  balanceText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginRight: 8,
-    color: PRIMARY,
-  },
-  balanceSectionContainer: {
-    alignItems: 'center',
-  },
-  balanceSubContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 4,
-  },
-  balanceValueText: {
-    fontSize: 15,
-    color: GRAY,
   },
   // spoiler section
   spoilerSection: {
